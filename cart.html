@@ -17,8 +17,8 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="shop.html">Produtos</a></li>
                 <li><a href="about.html">Sobre Nós</a></li>
-                <li><a class="active" href="contact.html">Fale Conosco</a></li>
-                <li id="lg-bag"><a href="cart.html"><i class='bx bx-cart icon'></i></a></li>
+                <li><a href="contact.html">Fale Conosco</a></li>
+                <li id="lg-bag"><a class="active" href="cart.html"><i class='bx bx-cart icon'></i></a></li>
                 <a href="#" id="close"><i class='bx bx-window-close'></i></a>
             </ul>
         </div>
@@ -31,40 +31,78 @@
 
     <section id="page-header" class="about-header">
         
-        <h2>Fale Conosco</h2>
+        <h2>Carrinho</h2>
 
         <p>Lorem ipsum dolor sit amet consectetur</p>
 
     </section>
 
-    <section id="contact-details" class="section-p1">
-        <div class="details">
-            <span>Lorem ipsum</span>
-            <h2>Visite nossa pista!</h2>
-            <h3>Kartódromo Senna</h3>
+    <section id="cart" class="section-p1">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Remover</td>
+                    <td>Imagem</td>
+                    <td>Produto</td>
+                    <td>Preço</td>
+                    <td>Quantidade</td>
+                    <td>SubTotal</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="cart-product">
+                    <td><button class="remove-product-button"><i class='bx bxs-message-rounded-minus'></i></button></td>
+                    <td><img src="img/kart kids 1100.png" alt=""></td>
+                    <td>Kart Kids</td>
+                    <td class="cart-product-price">R$ 130</td>
+                    <td><input type="number" value="2" min="0" class="product-qtd-input"></td>
+                    <td class="total-price">R$ 130</td>
+                </tr>
+                <tr>
+                    <td><button class="remove-product-button"><i class='bx bxs-message-rounded-minus'></i></button></td>
+                    <td><img src="img/kart 13hp 1100.png" alt=""></td>
+                    <td>Kart 13HP</td>
+                    <td>R$ 140</td>
+                    <td><input type="number" value="2" min="0"></td>
+                    <td>R$ 140</td>
+                </tr>
+                <tr>
+                    <td><button class="remove-product-button"><i class='bx bxs-message-rounded-minus'></i></button></td>
+                    <td><img src="img/kart 15hp 1100.png" alt=""></td>
+                    <td>Kart 15HP</td>
+                    <td>R$ 150</td>
+                    <td><input type="number" value="1"></td>
+                    <td>R$ 150</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="cart-add" class="section-p1">
+        <div id="coupon">
+            <h3>Aplicar cupom</h3>
             <div>
-                <li>
-                   <i class='bx bx-map-alt'></i>
-                   <p>Rua Calçada, nº 69, Pindamonhangaba - SP</p>
-                </li>
-                <li>
-                    <i class='bx bx-envelope'></i>
-                    <p>contact@example.com</p>
-                 </li>
-                 <li>
-                    <i class='bx bx-phone'></i>
-                    <p>(11) 96969-2222</p>
-                 </li>
-                 <li>
-                    <i class='bx bx-time'></i>
-                    <p>Ter - Dom, 14:00 - 22:00</p>
-                 </li>
+                <input type="text" placeholder="Digite seu cupom">
+                <button class="normal">Aplicar</button>
             </div>
         </div>
-
-        <div class="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14613.710772270711!2d-46.70937945269449!3d-23.696416195163227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce4fb9502a5651%3A0x36d0ce0016433271!2sAyrton%20Senna%20Karting%20Circuit!5e0!3m2!1sen!2sbr!4v1685325474904!5m2!1sen!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            
+        <div id="subtotal">
+            <h3>Total do Carrinho</h3>
+            <table>
+                <tr>
+                    <td>Subtotal</td>
+                    <td class="total-price">R$ 420</td>
+                </tr>
+                <tr>
+                    <td>Cupom</td>
+                    <td>- R$ 0</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>R$ 420</strong></td>
+                </tr>
+            </table>
+            <button class="normal">Confirmar Reserva</button>
         </div>
     </section>
 
@@ -117,6 +155,6 @@
     </footer>
 
 
-    <script src="js/integrador.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 </html>
