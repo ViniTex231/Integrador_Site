@@ -17,6 +17,13 @@ function ready(){
     for (var i = 0; i < quantityInputs.length; i++){
         var input = quantityInputs[i]
         input.addEventListener("change", quantityChanged);
+    }
+    // Add to Cart
+    var addCart = document.getElementsByClassName("add-cart")
+    for (var i = 0; i < addCart.length; i++){
+        var button = addCart[i]
+        button.addEventListener('click', addCartClicked);
+    }    
 }
 
 
@@ -36,6 +43,46 @@ function quantityChanged(event){
     }
     updatetotal();
 }
+// Add To Cart
+function addCartClicked(event){
+    var button = event.target
+    shopProducts = button.parentElement
+    var title = shopProducts.getElementsByClassName("product-title")[0].innerText;
+    var price = shopProducts.getElementsByClassName("price")[0].innerText;
+    var productImg = shopProducts.getElementsByClassName("single-pro-image")[0].src;
+    addProductToCart(title, price, productImg);
+    updatetotal();   
+}
+function addProductToCart(title, price, productImg){
+    var cartShopBox = document.createElement('div')
+    cartShopBox.classList.add("cart-box")
+    var cartItems = document.getElementsByClassName("cart-content")[0]
+    var cartItemsNames = cartItems.getElementsByClassName("product-title")
+    for (var i = 0; i < cartItemsNames.length; i++){
+        if (cartItemsNames[i].innerText == title) {
+            alert("You have already add this item to cart");
+            return;
+        }    
+    }
+    var cartBoxContent = `
+                    <tr id="item1">
+                        <td><button class="cart-remove"><i class='bx bxs-message-rounded-minus'></i></button></td>
+                        <td><img src="${productImg}" alt=""></td>
+                        <td>Kart Kids</td>
+                        <td class="cart-price">R$ 130</td>
+                        <td class="cart-quantity"><input type="number" value="1" min="0"></td>
+                        <td class="total-item">R$ 0</td>
+                    </tr>`;
+    cartShopBox.innerHTML = cartBoxContent
+    cartItems.append(cartShopBox)
+    cartShopBox
+        .getElementsByClassName("cart-remove")[0]
+        .addEventListener("click", removeCartItem);
+    cartShopBox
+        .getElementsByClassName("cart-quantity")[0]
+        .addEventListener("change", quantityChanged);
+}    
+
 
 // Update Total
 function updatetotal(){
@@ -53,5 +100,4 @@ function updatetotal(){
         document.getElementsByClassName("total-price")[0].innerText = 'R$' + total;
     }
 
-}
 }
