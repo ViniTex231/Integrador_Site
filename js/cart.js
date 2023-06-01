@@ -1,103 +1,49 @@
-if (document.readyState == 'loading'){
-    document.addEventListener("DOMContentLoaded", ready)
-}else{
-    ready();
-}
+document.addEventListener("DOMContentLoaded", function() {
+    // Obtém todos os elementos necessários do carrinho
+    var cartItems = document.querySelectorAll(".cart-content tr");
+    var subtotalElement = document.querySelector(".total-price");
+    var totalElement = document.querySelector(".total-price strong");
+    var confirmButton = document.querySelector(".normal");
 
-function ready(){
-    // Remove items
-    var removeCartButtons = document.getElementsByClassName("cart-remove")
-    console.log(removeCartButtons)
-    for (var i = 0; i < removeCartButtons.length; i++){
-        var button = removeCartButtons[i]
-        button.addEventListener('click', removeCartItem)
-    }
-    // Quantity Changes
-    var quantityInputs = document.getElementsByClassName("cart-quantity")
-    for (var i = 0; i < quantityInputs.length; i++){
-        var input = quantityInputs[i]
-        input.addEventListener("change", quantityChanged);
-    }
-    // Add to Cart
-    var addCart = document.getElementsByClassName("add-cart")
-    for (var i = 0; i < addCart.length; i++){
-        var button = addCart[i]
-        button.addEventListener('click', addCartClicked);
-    }    
-}
+    // Atualiza os totais de preço e subtotal
+    function updateTotals() {
+        var subtotal = 0;
+        var total = 0;
 
+        cartItems.forEach(function(item) {
+            var priceElement = item.querySelector(".cart-price");
+            var quantityElement = item.querySelector(".cart-quantity input");
+            var totalItemElement = item.querySelector(".total-item");
 
-// Remove Items from Cart
-function removeCartItem(event){
-    var buttonClicked = event.target
-    buttonClicked = document.getElementById("item1");
-    buttonClicked.remove();
-    updatetotal();
-}
+            var price = parseFloat(priceElement.textContent.replace("R$", ""));
+            var quantity = parseInt(quantityElement.value);
+            var totalItem = price * quantity;
 
-// Quantity Changes
-function quantityChanged(event){
-    var input = event.target
-    if (isNaN(input.value) || input.value <= 0){
-        input.value = 1
-    }
-    updatetotal();
-}
-// Add To Cart
-function addCartClicked(event){
-    var button = event.target
-    shopProducts = button.parentElement
-    var title = shopProducts.getElementsByClassName("product-title")[0].innerText;
-    var price = shopProducts.getElementsByClassName("price")[0].innerText;
-    var productImg = shopProducts.getElementsByClassName("single-pro-image")[0].src;
-    addProductToCart(title, price, productImg);
-    updatetotal();   
-}
-function addProductToCart(title, price, productImg){
-    var cartShopBox = document.createElement('div')
-    cartShopBox.classList.add("cart-box")
-    var cartItems = document.getElementsByClassName("cart-content")[0]
-    var cartItemsNames = cartItems.getElementsByClassName("product-title")
-    for (var i = 0; i < cartItemsNames.length; i++){
-        if (cartItemsNames[i].innerText == title) {
-            alert("You have already add this item to cart");
-            return;
-        }    
-    }
-    var cartBoxContent = `
-                    <tr id="item1">
-                        <td><button class="cart-remove"><i class='bx bxs-message-rounded-minus'></i></button></td>
-                        <td><img src="${productImg}" alt=""></td>
-                        <td>Kart Kids</td>
-                        <td class="cart-price">R$ 130</td>
-                        <td class="cart-quantity"><input type="number" value="1" min="0"></td>
-                        <td class="total-item">R$ 0</td>
-                    </tr>`;
-    cartShopBox.innerHTML = cartBoxContent
-    cartItems.append(cartShopBox)
-    cartShopBox
-        .getElementsByClassName("cart-remove")[0]
-        .addEventListener("click", removeCartItem);
-    cartShopBox
-        .getElementsByClassName("cart-quantity")[0]
-        .addEventListener("change", quantityChanged);
-}    
+            subtotal += totalItem;
+            total += totalItem;
 
+            totalItemElement.textContent = "R$ " + totalItem.toFixed(2);
+        });
 
-// Update Total
-function updatetotal(){
-    var cartContent = document.getElementsByClassName("cart-content")[0]
-    var cartBoxes = cartContent.getElementById("item1")
-    var total = 0;
-    for (var i = 0; i < cartBoxes.length; i++) {
-        var cartBox = cartBoxes[i]
-        var priceElement = cartBox.getElementsByClassName("cart-price")[0]
-        var quantityElement = cartBox.getElementsByClassName("cart-quantity")[0]
-        var price = parseFloat(priceElement.innerText.replace("R$", ""));
-        var quantity = quantityElement.value
-        total = total + (price * quantity);
-
-        document.getElementsByClassName("total-price")[0].innerText = 'R$' + total;
+        subtotalElement.textContent = "R$ " + subtotal.toFixed(2);
+        totalElement.textContent = "R$ " + total.toFixed(2);
     }
 
-}
+    // Adiciona um event listener para atualizar os totais sempre que a quantidade do item mudar
+    cartItems.forEach(function(item) {
+        var quantityElement = item.querySelector(".cart-quantity input");
+        quantityElement.addEventListener("change", updateTotals);
+    });
+
+    // Remove o item do carrinho ao clicar no botão de remoção
+    cartItems.forEach(function(item) {
+        var removeButton = item.querySelector(".cart-remove");
+        removeButton.addEventListener("click", function() {
+            item.remove();
+            updateTotals();
+        });
+    });
+
+    // Chama a função de atualização dos totais no carregamento inicial
+    updateTotals();
+});
