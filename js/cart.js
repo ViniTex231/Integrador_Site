@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Get all elements
+    // Pega os elementos
     var cartItems = document.querySelectorAll(".cart-content tr");
     var subtotalElement = document.querySelector(".total-price");
     var totalElement = document.querySelector(".total-price strong");
     var confirmButton = document.querySelector(".normal");
 
-    // Update Subtotal and Total prices
+    // Atualiza SubTotal e Total
     function updateTotals() {
         var subtotal = 0;
         var total = 0;
@@ -29,13 +29,13 @@ document.addEventListener("DOMContentLoaded", function() {
         totalElement.textContent = "R$ " + total.toFixed(2);
     }
 
-    // Crate a event listener for update the totals when the itens quantity updates 
+    // Cria um escutador para atualizar os valores totais quando a quantidade alterar
     cartItems.forEach(function(item) {
         var quantityElement = item.querySelector(".cart-quantity input");
         quantityElement.addEventListener("change", updateTotals);
     });
 
-    // Remove a item for cart
+    // Remove o item do carrinho
     cartItems.forEach(function(item) {
         var removeButton = item.querySelector(".cart-remove");
         removeButton.addEventListener("click", function() {
@@ -44,6 +44,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Call the update function in the start
+    // Chama a função no inicio
     updateTotals();
 });
